@@ -1,6 +1,7 @@
 # PlaySomething
 
 > Don't know what to listen to? We'll pick.
+> https://play-something-seven.vercel.app/
 
 A beautiful music discovery experience. Press one button and discover amazing songs and albums.
 
