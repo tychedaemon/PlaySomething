@@ -1,0 +1,100 @@
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { MusicProviderWrapper } from "@/providers/music-provider-wrapper";
+import { KeyboardHandler } from "@/components/keyboard-handler";
+import "./globals.css";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://playsomething.app"),
+  title: {
+    default: "PlaySomething | Don't know what to listen to?",
+    template: "%s | PlaySomething",
+  },
+  description:
+    "A beautiful music discovery experience. Press a button and discover amazing songs and albums.",
+  keywords: [
+    "music",
+    "discovery",
+    "spotify",
+    "songs",
+    "albums",
+    "recommendations",
+  ],
+  authors: [{ name: "PlaySomething" }],
+  creator: "PlaySomething",
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/icon.svg",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://playsomething.app",
+    siteName: "PlaySomething",
+    title: "PlaySomething | Don't know what to listen to?",
+    description:
+      "A beautiful music discovery experience. Press a button and discover amazing songs and albums.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "PlaySomething",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PlaySomething | Don't know what to listen to?",
+    description:
+      "A beautiful music discovery experience. Press a button and discover amazing songs and albums.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#090909",
+  width: "device-width",
+  initialScale: 1,
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col bg-[#090909] text-white font-sans">
+        <MusicProviderWrapper>
+          {children}
+          <KeyboardHandler />
+        </MusicProviderWrapper>
+      </body>
+    </html>
+  );
+}

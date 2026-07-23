@@ -1,0 +1,31 @@
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export function formatDuration(seconds: number): string {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+}
+
+export function getSpotifyEmbedUrl(url: string): string {
+  const trackId = url.split("/track/")[1]?.split("?")[0];
+  return trackId ? `https://open.spotify.com/embed/track/${trackId}` : url;
+}
+
+export function getYouTubeSearchUrl(artist: string, title: string): string {
+  const query = encodeURIComponent(`${artist} ${title}`);
+  return `https://www.youtube.com/results?search_query=${query}`;
+}
+
+export function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
