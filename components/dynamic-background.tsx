@@ -20,40 +20,42 @@ export function DynamicBackground({ color }: DynamicBackgroundProps) {
 
   if (!isClient) return null;
 
-  const baseColor = color || "#1a1a2e";
+  const baseColor = color || "transparent";
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden bg-[#090909]">
       <AnimatePresence mode="wait">
         <motion.div
           key={color || "default"}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.1 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 2, ease: "easeInOut" }}
           className="absolute inset-0"
         >
+          {/* Full viewport ambient wash */}
           <div
-            className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[150px] opacity-30"
-            style={{ backgroundColor: baseColor }}
-          />
-          <div
-            className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full blur-[120px] opacity-20"
+            className="absolute inset-0 opacity-40"
             style={{
-              backgroundColor: baseColor,
-              filter: "hue-rotate(30deg)",
+              background: `radial-gradient(ellipse 120% 120% at 30% 40%, ${baseColor}, transparent 70%)`,
             }}
           />
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[200px] opacity-10"
+            className="absolute inset-0 opacity-20"
             style={{
-              backgroundColor: baseColor,
-              filter: "hue-rotate(-30deg)",
+              background: `radial-gradient(ellipse 100% 100% at 70% 60%, ${baseColor}, transparent 60%)`,
+              filter: "blur(60px)",
+            }}
+          />
+          <div
+            className="absolute inset-0 opacity-10"
+            style={{
+              background: `radial-gradient(ellipse 140% 140% at 50% 50%, ${baseColor}, transparent 50%)`,
+              filter: "hue-rotate(20deg) blur(80px)",
             }}
           />
         </motion.div>
       </AnimatePresence>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#090909]/80" />
     </div>
   );
 }
