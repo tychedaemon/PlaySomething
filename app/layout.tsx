@@ -1,22 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Inter_Tight, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { MusicProviderWrapper } from "@/providers/music-provider-wrapper";
 import { KeyboardHandler } from "@/components/keyboard-handler";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-});
-
-const interTight = Inter_Tight({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["700", "800", "900"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-mono",
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -93,7 +87,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${interTight.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#090909] text-white font-sans">
         <MusicProviderWrapper>
