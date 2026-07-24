@@ -16,41 +16,36 @@ export function Header({
 }: HeaderProps) {
   return (
     <motion.header
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="fixed top-0 left-0 right-0 z-30"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="fixed top-0 left-0 right-0 z-30 pointer-events-none"
     >
-      <div className="mx-auto max-w-7xl px-6 py-5">
-        <div className="flex items-center justify-between">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            {hasRecommendation && (
-              <span className="text-sm font-medium text-white/40 tracking-wider uppercase">
-                PlaySomething
-              </span>
-            )}
-          </motion.div>
+      <div className="absolute top-0 left-0 right-0 h-[120px] bg-gradient-to-b from-black/50 to-transparent" />
+      <div className="relative mx-auto max-w-screen px-6 py-5 flex items-center justify-between pointer-events-auto">
+        <div>
+          {hasRecommendation && (
+            <span className="font-mono text-[11px] text-[#8A8A8A] tracking-[0.15em] uppercase">
+              PlaySomething
+            </span>
+          )}
+        </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={onFiltersClick}
-              className="p-3 rounded-xl text-white/40 hover:text-white hover:bg-white/5 transition-all"
-              aria-label="Open filters"
-            >
-              <SlidersHorizontal className="w-5 h-5" />
-            </button>
-            <button
-              onClick={onHistoryClick}
-              className="p-3 rounded-xl text-white/40 hover:text-white hover:bg-white/5 transition-all"
-              aria-label="Open history"
-            >
-              <History className="w-5 h-5" />
-            </button>
-          </div>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={onFiltersClick}
+            className="p-3 rounded-xl text-[#8A8A8A] hover:text-[#F5F5F5] hover:bg-white/5 transition-all"
+            aria-label="Open filters"
+          >
+            <SlidersHorizontal className="w-[18px] h-[18px]" />
+          </button>
+          <button
+            onClick={onHistoryClick}
+            className="p-3 rounded-xl text-[#8A8A8A] hover:text-[#F5F5F5] hover:bg-white/5 transition-all"
+            aria-label="Open history"
+          >
+            <History className="w-[18px] h-[18px]" />
+          </button>
         </div>
       </div>
     </motion.header>

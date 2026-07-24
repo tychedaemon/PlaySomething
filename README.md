@@ -3,27 +3,33 @@
 > Don't know what to listen to? We'll pick.
 > https://play-something-seven.vercel.app/
 
-A beautiful music discovery experience. Press one button and discover amazing songs and albums.
+A beautiful music discovery experience. Press one button and discover millions of songs and albums from the iTunes catalog.
+
+**v0.02** — Now powered by the iTunes Search API with thousands of songs instead of a static JSON dataset.
 
 ## Features
 
-- **Smart Randomization** - 80% songs, 20% albums weighted recommendations
-- **Never Repeat** - Last 10 discoveries excluded from next pick
-- **Favorites** - Save songs and albums with a heart animation
-- **History** - Slide-out drawer with last 25 discoveries
-- **Filters** - Genre, decade, and type filters
-- **Dynamic Background** - Animated blurred gradient from album artwork colors
-- **Keyboard Accessible** - Press Space to discover
-- **Responsive** - Works on mobile, tablet, and desktop
-- **Dark Mode** - Premium dark theme with glassmorphism
+- **Smart Randomization** — 80% songs, 20% albums weighted recommendations
+- **Never Repeat** — Last 10 discoveries excluded from the next pick
+- **iTunes Catalog** — Real songs/albums with artwork, genre, duration, and year
+- **Favorites** — Save songs and albums with a heart animation
+- **History** — Slide-out drawer with last 25 discoveries
+- **Filters** — Genre, decade, and type filters
+- **Dynamic Background** — Animated blurred gradient that changes per recommendation
+- **Listen on Apple Music** — Direct link to each track/album
+- **Watch on YouTube** — Auto-generated YouTube search links
+- **Keyboard Accessible** — Press Space to discover
+- **Responsive** — Works on mobile, tablet, and desktop
+- **Dark Mode** — Premium dark theme with glassmorphism
 
 ## Tech Stack
 
-- [Next.js 16](https://nextjs.org/) - App Router
+- [Next.js 16](https://nextjs.org/) — App Router
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS v4](https://tailwindcss.com/)
 - [Framer Motion](https://www.framer.com/motion/)
 - [Lucide React](https://lucide.dev/)
+- [iTunes Search API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/)
 
 ## Getting Started
 
@@ -41,7 +47,7 @@ npm run build
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+No API keys required. Open [http://localhost:3000](http://localhost:3000) and press "Play Something".
 
 ## Project Structure
 
@@ -49,17 +55,17 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 app/              # Next.js App Router pages
 components/       # React components
 components/ui/    # Reusable UI components
-data/             # Local music dataset
+data/             # Local JSON dataset (fallback)
 hooks/            # Custom React hooks
 lib/              # Utility functions
-providers/        # React context providers
-services/         # Music provider abstraction
+providers/        # React context provider
+services/         # Music provider abstraction layer
 types/            # TypeScript type definitions
 ```
 
 ## Architecture
 
-The app uses a **MusicProvider abstraction** layer. Currently backed by a local JSON dataset, but designed to swap to Spotify API without modifying any UI code.
+The app uses a **MusicProvider abstraction** layer. The active provider is `ITunesMusicProvider` which fetches from the iTunes Search API. The architecture supports swapping providers without touching any UI code.
 
 ```typescript
 interface MusicProvider {
@@ -68,6 +74,21 @@ interface MusicProvider {
   getRandomItem(filters?, excludeIds?): Promise<MusicItem>;
 }
 ```
+
+Built-in providers:
+- **`ITunesMusicProvider`** (default) — Searches the iTunes catalog with random seeds for wide discovery
+- **`LocalMusicProvider`** — Reads from local `data/songs.json` and `data/albums.json` (30 songs, 15 albums)
+
+## v0.02 Changelog
+
+- Swapped static JSON dataset for the iTunes Search API (no API key needed, works globally)
+- Replaced "Listen on Spotify" with "Listen on Apple Music"
+- Removed "Powered by Spotify" branding
+- Updated button styling with Apple Music-inspired red and glass-morphism variants
+- Fixed composition bugs: dead space on wide screens, title wrapping, background gradient tracking
+- Added artwork loading placeholder with fade-in
+- Polished loading state with smoother transitions
+- Updated Next.js image config for iTunes artwork CDN
 
 ## License
 

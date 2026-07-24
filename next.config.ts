@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
         pathname: "/**",
         search: "",
       },
+      {
+        protocol: "https",
+        hostname: "**.mzstatic.com",
+        port: "",
+        pathname: "/**",
+        search: "",
+      },
     ],
   },
 };

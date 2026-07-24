@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Dices } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 interface LandingPageProps {
   onPlay: () => void;
@@ -10,38 +11,40 @@ interface LandingPageProps {
 }
 
 export function LandingPage({ onPlay, isLoading }: LandingPageProps) {
+  const reduced = usePrefersReducedMotion();
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: reduced ? 0 : 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: reduced ? 0.15 : 0.8, ease: "easeOut" }}
         className="text-center max-w-2xl"
       >
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: reduced ? 0 : 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight"
+          transition={{ delay: 0.2, duration: reduced ? 0.15 : 0.6 }}
+          className="font-display text-5xl md:text-8xl font-bold text-white mb-6 tracking-[-0.02em] leading-[0.9]"
         >
           PlaySomething
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: reduced ? 0 : 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="text-xl md:text-2xl text-white/60 mb-12 leading-relaxed"
+          transition={{ delay: 0.4, duration: reduced ? 0.15 : 0.6 }}
+          className="text-xl md:text-2xl text-[#8A8A8A] mb-12 leading-relaxed"
         >
           Don&apos;t know what to listen to?
           <br />
-          <span className="text-white/80 font-medium">We&apos;ll pick.</span>
+          <span className="text-[#F5F5F5]">We&apos;ll pick.</span>
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: reduced ? 0 : 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
+          transition={{ delay: 0.6, duration: reduced ? 0.15 : 0.6 }}
         >
           <Button
             onClick={onPlay}
@@ -54,7 +57,7 @@ export function LandingPage({ onPlay, isLoading }: LandingPageProps) {
               transition={
                 isLoading
                   ? { duration: 1, repeat: Infinity, ease: "linear" }
-                  : { duration: 0.3 }
+                  : { type: "spring", stiffness: 200, damping: 15 }
               }
             >
               <Dices className="w-6 h-6" />
@@ -64,24 +67,7 @@ export function LandingPage({ onPlay, isLoading }: LandingPageProps) {
         </motion.div>
       </motion.div>
 
-      <motion.footer
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 0.6 }}
-        className="fixed bottom-6 text-center"
-      >
-        <p className="text-xs text-white/20">
-          Powered by{" "}
-          <a
-            href="https://spotify.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white/40 hover:text-white/60 transition-colors"
-          >
-            Spotify
-          </a>
-        </p>
-      </motion.footer>
+
     </div>
   );
 }
